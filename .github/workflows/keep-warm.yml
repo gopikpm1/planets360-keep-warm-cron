@@ -1,0 +1,45 @@
+name: Cloudflare Worker Keep-Warm
+
+on:
+  schedule:
+    # Runs every 5 minutes
+    - cron: '*/5 * * * *'
+  # Allows you to trigger it manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  ping-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Keep-Warm Requests
+        run: |
+          # Define your array of major URLs to ping
+          URLS=(
+            "https://planets360.in/"
+            "https://planets360.in/horoscope/daily/aries"
+            "https://planets360.in/horoscope/daily/taurus"
+            "https://planets360.in/horoscope/daily/gemini"
+            "https://planets360.in/horoscope/daily/cancer"
+            "https://planets360.in/horoscope/daily/leo"
+            "https://planets360.in/horoscope/daily/scorpio"
+            "https://planets360.in/horoscope/daily/sagittarius"
+            "https://planets360.in/horoscope/daily/capricorn"
+            "https://planets360.in/horoscope/daily/pisces"
+            "https://planets360.in/horoscope/daily/aquarius"
+            "https://planets360.in/planets-transits"
+            "https://planets360.in/chandrashtama"
+            "https://planets360.in/vedic-calendar"
+            "https://planets360.in/panchang?date=2026-10-07&geoname-id=1264527"
+          )
+
+          for url in "${URLS[@]}"; do
+            echo "Pinging $url..."
+            response=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+            echo "Status Code: $response"
+            
+            if [ "$response" -eq 200 ]; then
+              echo "Successfully warmed $url"
+            else
+              echo "Warning: Received HTTP status $response for $url"
+            }
+          >
