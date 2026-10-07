@@ -13,7 +13,6 @@ jobs:
     steps:
       - name: Send Keep-Warm Requests
         run: |
-          # Define your array of major URLs to ping
           URLS=(
             "https://planets360.in/"
             "https://planets360.in/horoscope/daily/aries"
@@ -41,5 +40,5 @@ jobs:
               echo "Successfully warmed $url"
             else
               echo "Warning: Received HTTP status $response for $url"
-            }
-          >
+            fi
+          done
