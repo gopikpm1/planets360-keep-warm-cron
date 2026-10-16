@@ -28,7 +28,7 @@ jobs:
             "https://planets360.in/planets-transits"
             "https://planets360.in/chandrashtama"
             "https://planets360.in/vedic-calendar"
-            "https://planets360.in/panchang?date=2026-10-07&geoname-id=1264527"
+            "https://planets360.in/panchang"
           )
 
           for url in "${URLS[@]}"; do
